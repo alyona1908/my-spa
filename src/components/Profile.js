@@ -8,7 +8,7 @@ function Profile() {
       <h1>
         Here will be your profile
       </h1>
-      <img className="sticker" src={sticker} alt="Приветствие" />
+      <img className="sticker" src={sticker} alt="Girl-programmer" />
     </div>
   );
 }

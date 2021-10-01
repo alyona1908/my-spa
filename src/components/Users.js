@@ -8,7 +8,7 @@ function Users() {
       <h1>
         There will be a table with the name - Users
       </h1>
-      <img className="sticker" src={sticker} alt="Приветствие" />
+      <img className="sticker" src={sticker} alt="Cheerful girl" />
     </div>
   );
 }

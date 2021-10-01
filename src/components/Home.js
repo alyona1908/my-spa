@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className="content">
       <h1>Hi! This Test SPA. Home page</h1>
-      <img className="sticker" src={sticker} alt="Приветствие" />
+      <img className="sticker" src={sticker} alt="Greetings" />
     </div>
   );
 }
