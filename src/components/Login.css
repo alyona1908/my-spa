@@ -1,0 +1,11 @@
+.boxLog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25vh;
+}
+
+.fieldLog {
+    width: 300px;
+    border-color: #000;
+}

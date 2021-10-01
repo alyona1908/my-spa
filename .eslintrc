@@ -1,0 +1,30 @@
+{
+  "extends": ["airbnb", "plugin:jsx-control-statements/recommended"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "commonjs": true
+  },
+  "plugins": [
+    "react",
+    "jsx-control-statements",
+    "react-hooks"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-no-undef": [2, { "allowGlobals": true }],
+    "no-param-reassign": [2, { "props": false }],
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "arrow-parens": [1, "as-needed", { "requireForBlockBody": true }],
+    "arrow-body-style": [1, "as-needed"],
+    "react/sort-comp": 0,
+    "default-case": 0,
+    "linebreak-style": 0,
+    "tabindex-no-positive": 0,
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/rules-of-hooks": "error", // Проверяем правила хуков
+    "react-hooks/exhaustive-deps": "warn" // Проверяем зависимости эффекта
+  }
+}
