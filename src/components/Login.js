@@ -16,7 +16,6 @@ function Login({ setAuthent }) {
     password: valuePass,
   };
   const history = useHistory();
-
   // eslint-disable-next-line consistent-return
   function verification() {
     if (JSON.stringify(data) === JSON.stringify(returnlogKey)) {

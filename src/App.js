@@ -1,6 +1,9 @@
 import { React, useState } from 'react';
+// eslint-disable-next-line import/no-duplicates
+import { useHistory } from 'react-router-dom';
 import {
   BrowserRouter as Router, Switch, Route, Link,
+// eslint-disable-next-line import/no-duplicates
 } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Users from './components/Users';
@@ -25,6 +28,12 @@ function App() {
   }
 
   const [authent, setAuthent] = useState(auth);
+  const history = useHistory();
+
+  function logOut() {
+    setAuthent(false);
+    history.push('/');
+  }
 
   return (
     <div>
@@ -33,6 +42,7 @@ function App() {
           <Button variant="outline" color="success"><Link className="header-button" to="/"> Home </Link></Button>
           <Button variant="outline" color="success"><Link className="header-button" to="/users">Users</Link></Button>
           <Button variant="outline" color="success"><Link className="header-button" to="/profile">Profile</Link></Button>
+          {(authent) ? <Button onClick={() => logOut()} variant="outline" color="success" className="header-button">Log Out</Button> : ''}
         </div>
         <Switch>
           <Route exact path="/" component={Home} />
