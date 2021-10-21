@@ -1,0 +1,35 @@
+.input-container {
+    width: 400px;
+    padding: 25px;
+    border: solid 2px rgb(76, 230, 230);; 
+    margin: 10vh auto;
+    border-radius: 5%;
+}
+
+.input {
+    padding:10px;
+    margin-top: 5px;
+    border-radius:10px;
+    box-shadow:0 0 15px 4px rgba(76, 230, 230,0.08);
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: rgb(76, 230, 230);
+  padding: 4px 10px;
+  font-size: 16px;
+}
+
+.button {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}

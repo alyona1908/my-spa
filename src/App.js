@@ -11,6 +11,7 @@ import Profile from './components/Profile';
 import Home from './components/Home';
 import Login from './components/Login';
 import ModalUnstyledDemo from './components/Modal';
+import AddForm from './components/AddForm';
 
 function App() {
   const dataLog = {
@@ -53,6 +54,8 @@ function App() {
         </Route>
         <Route path="/login" component={Login} />
         <Route path="/error" component={ModalUnstyledDemo} />
+        <Route path="/add" component={AddForm} />
+        <Route path="/edit/:id" component={AddForm} />
       </Switch>
     </div>
   );
