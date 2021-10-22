@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable max-len */
 /* eslint-disable consistent-return */
-import * as React from 'react';
+import { React, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
 import { ADD_USER, UPDATE_USER } from '../store/actions/actions';
 import userSchema from '../Validations/Validations';
 import './AddForm.css';
@@ -11,22 +14,7 @@ export default function AddForm() {
 
   const history = useHistory();
   const handleClose = () => { history.goBack(); };
-
   const dispatch = useDispatch();
-
-  const inputValidation = async (event) => {
-    event.preventDefault();
-    const formInput = {
-      email: event.target[0].value,
-      firstName: event.target[1].value,
-      lastName: event.target[2].value,
-      bDay: event.target[3].value,
-      city: event.target[4].value,
-    };
-    const isValid = await userSchema.isValid(formInput);
-    // eslint-disable-next-line no-console
-    console.log(isValid);
-  };
 
   let inputValues;
   const storageData = useSelector(state => state.table);
@@ -44,8 +32,8 @@ export default function AddForm() {
       id: '', email: '', firstName: '', lastName: '', bDay: '', city: '',
     };
   }
-  const [data, setData] = React.useState(inputValues);
-  const handleChange = (value, key) => {
+  const [data, setData] = useState(inputValues);
+  const handleChangeData = (value, key) => {
     data[key] = value;
     setData(data);
     inputValues = data;
@@ -66,43 +54,116 @@ export default function AddForm() {
       history.goBack();
     }
   };
+  useEffect(() => {
+    const elInput = document.getElementById('input-email');
+    elInput.addEventListener('change', event => handleChangeData(event.target.value, 'email'));
+    const firstNameInput = document.getElementById('input-firstName');
+    firstNameInput.addEventListener('change', event => handleChangeData(event.target.value, 'firstName'));
+    const lastNameInput = document.getElementById('input-lastName');
+    lastNameInput.addEventListener('change', event => handleChangeData(event.target.value, 'lastName'));
+    const bDayInput = document.getElementById('input-bDay');
+    bDayInput.addEventListener('change', event => handleChangeData(event.target.value, 'bDay'));
+    const cityInput = document.getElementById('input-city');
+    cityInput.addEventListener('change', event => handleChangeData(event.target.value, 'city'));
+  });
 
   return (
-    <div className="input-container">
-      <div className="">
-        <label htmlFor="choose">
-          Please enter your Email:
-          <input className="input" onChange={event => handleChange(event.target.value, 'email')} defaultValue={inputValues.email} type="text" id="choose" name="email" required />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="choose">
-          Please enter your First name:
-          <input className="input" onChange={event => handleChange(event.target.value, 'firstName')} defaultValue={inputValues.firstName} type="text" id="choose" name="first_name" required />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="choose">
-          Please enter your Last name:
-          <input className="input" onChange={event => handleChange(event.target.value, 'lastName')} defaultValue={inputValues.lastName} type="text" id="choose" name="last_name" required />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="choose">
-          Please enter your Date of birth:
-          <input className="input" onChange={event => handleChange(event.target.value, 'bDay')} defaultValue={inputValues.bDay} type="text" id="choose" name="birth" required />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="choose">
-          Please enter your City:
-          <input className="input" onChange={event => handleChange(event.target.value, 'city')} defaultValue={inputValues.city} ype="text" id="choose" name="city" required />
-        </label>
-      </div>
-      <div onSubmit={inputValidation} className="button">
-        <button onClick={handleClose} type="button">Back</button>
-        <button onClick={handleAdd} type="submit">Save</button>
-      </div>
-    </div>
+    <Formik
+      initialValues={{
+        email: inputValues.email,
+        firstName: inputValues.firstName,
+        lastName: inputValues.lastName,
+        bDay: inputValues.bDay,
+        city: inputValues.city,
+      }}
+      validateOnBlur
+      validationSchema={userSchema}
+    >
+      {({
+        values, errors, touched, handleChange, handleBlur, isValid, dirty,
+      }) => (
+        <div className="input-container">
+          <p>
+            <label htmlFor="input-email">Email:</label>
+            <br />
+            <input
+              className="input"
+              id="input-email"
+              type="text"
+              name="email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
+          </p>
+          {errors.email && <p className="error">{errors.email}</p>}
+          <p>
+            <label htmlFor="input-firstName">First name:</label>
+            <br />
+            <input
+              className="input"
+              id="input-firstName"
+              type="text"
+              name="firstName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.firstName}
+            />
+          </p>
+          { touched.firstName && errors.firstName && <p className="error">{errors.firstName}</p>}
+          <p>
+            <label htmlFor="input-lastName">Last name:</label>
+            <br />
+            <input
+              className="input"
+              id="input-lastName"
+              type="text"
+              name="lastName"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.lastName}
+            />
+          </p>
+          { touched.lastName && errors.lastName && <p className="error">{errors.lastName}</p>}
+          <p>
+            <label htmlFor="input-bDay">Date of birth:</label>
+            <br />
+            <input
+              pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+              className="input"
+              id="input-bDay"
+              type="text"
+              name="bDay"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.bDay}
+            />
+          </p>
+          { touched.bDay && errors.bDay && <p className="error">{errors.bDay}</p>}
+          <p>
+            <label htmlFor="input-city">City:</label>
+            <br />
+            <input
+              className="input"
+              id="input-city"
+              type="text"
+              name="city"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.city}
+            />
+          </p>
+          { touched.city && errors.city && <p className="error">{errors.city}</p>}
+          <div className="button">
+            <button id="button-add" disabled={!isValid || !dirty} onClick={handleAdd} type="submit">
+              Save
+            </button>
+            <button id="button-close" onClick={handleClose} type="button">
+              Back
+            </button>
+          </div>
+        </div>
+      )}
+    </Formik>
   );
 }
